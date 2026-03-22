@@ -10,20 +10,21 @@ public class DatabaseConnection {
     private static final String PASSWORD;
 
     static {
-        URL = System.getProperty("DB_URL",
-              System.getenv().getOrDefault("DB_URL",
-              "jdbc:mysql://honours-cms-mysql-ntombikayise21-8304.g.aivencloud.com:18355/defaultdb?ssl-mode=REQUIRED&useSSL=true&requireSSL=true&serverTimezone=UTC"));
+        String url = System.getenv("DB_URL") != null
+                   ? System.getenv("DB_URL")
+                   : System.getProperty("DB_URL", "jdbc:mysql://honours-cms-mysql-ntombikayise21-8304.g.aivencloud.com:18355/defaultdb?useSSL=true&requireSSL=true&serverTimezone=UTC");
 
-        USERNAME = System.getProperty("DB_USERNAME",
-                   System.getenv().getOrDefault("DB_USERNAME", "avnadmin"));
+        String username = System.getenv("DB_USERNAME") != null
+                        ? System.getenv("DB_USERNAME")
+                        : System.getProperty("DB_USERNAME", "avnadmin");
 
-        PASSWORD = System.getProperty("DB_PASSWORD",
-                   System.getenv().getOrDefault("DB_PASSWORD", ""));
+        String password = System.getenv("DB_PASSWORD") != null
+                        ? System.getenv("DB_PASSWORD")
+                        : System.getProperty("DB_PASSWORD", "AVNS_1C7QrSNiTEBlr8l7tff");
 
-        if (PASSWORD == null || PASSWORD.isEmpty()) {
-            throw new ExceptionInInitializerError(
-                "DB_PASSWORD must be set as an environment variable or -D system property.");
-        }
+        URL      = url;
+        USERNAME = username;
+        PASSWORD = password;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
