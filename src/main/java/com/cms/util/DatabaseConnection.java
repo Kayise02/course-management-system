@@ -1,27 +1,28 @@
 package com.cms.util;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
+
     private static final String URL;
     private static final String USERNAME;
     private static final String PASSWORD;
 
     static {
-        // FIX: Read from Java system properties (-D flags) first, then fall back to env vars.
-        // This allows Tomcat Windows Service to pass credentials via Java Options in tomcat11w.exe.
         URL = System.getProperty("DB_URL",
               System.getenv().getOrDefault("DB_URL",
-              "jdbc:mysql://localhost:3306/course_management_system?useSSL=false&serverTimezone=UTC"));
+              "jdbc:mysql://honours-cms-mysql-ntombikayise21-8304.g.aivencloud.com:18355/defaultdb?ssl-mode=REQUIRED&useSSL=true&requireSSL=true&serverTimezone=UTC"));
 
-        USERNAME = System.getProperty("DB_USERNAME", System.getenv("DB_USERNAME"));
-        PASSWORD = System.getProperty("DB_PASSWORD", System.getenv("DB_PASSWORD"));
+        USERNAME = System.getProperty("DB_USERNAME",
+                   System.getenv().getOrDefault("DB_USERNAME", "avnadmin"));
 
-        if (USERNAME == null || PASSWORD == null) {
+        PASSWORD = System.getProperty("DB_PASSWORD",
+                   System.getenv().getOrDefault("DB_PASSWORD", ""));
+
+        if (PASSWORD == null || PASSWORD.isEmpty()) {
             throw new ExceptionInInitializerError(
-                "DB_USERNAME and DB_PASSWORD must be set as environment variables or -D system properties.");
+                "DB_PASSWORD must be set as an environment variable or -D system property.");
         }
 
         try {
@@ -33,18 +34,5 @@ public class DatabaseConnection {
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USERNAME, PASSWORD);
-    }
-
-    public static void testConnection() {
-        try (Connection conn = getConnection()) {
-            System.out.println("Connection test: SUCCESS");
-            System.out.println("  Database: " + conn.getCatalog());
-        } catch (SQLException e) {
-            System.out.println("Connection test: FAILED — " + e.getMessage());
-        }
-    }
-
-    public static void main(String[] args) {
-        testConnection();
     }
 }
