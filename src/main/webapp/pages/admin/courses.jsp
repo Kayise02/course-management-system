@@ -3,7 +3,7 @@
 <%
     User currentUser = (User) session.getAttribute("user");
     if (currentUser == null || !"admin".equals(currentUser.getRole())) {
-        response.sendRedirect("/CourseManagementSystem/pages/login.jsp");
+        response.sendRedirect("${pageContext.request.contextPath}/pages/login.jsp");
         return;
     }
     CourseDAO courseDAO = new CourseDAO();
@@ -116,22 +116,22 @@
         </div>
         <div class="sidebar-section">
             <div class="sidebar-section-label">Overview</div>
-            <a href="/CourseManagementSystem/pages/admin/dashboard.jsp" class="nav-item">
+            <a href="${pageContext.request.contextPath}/pages/admin/dashboard.jsp" class="nav-item">
                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
                 Dashboard
             </a>
         </div>
         <div class="sidebar-section">
             <div class="sidebar-section-label">Management</div>
-            <a href="/CourseManagementSystem/pages/admin/users.jsp" class="nav-item">
+            <a href="${pageContext.request.contextPath}/pages/admin/users.jsp" class="nav-item">
                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 Manage Users
             </a>
-            <a href="/CourseManagementSystem/pages/admin/courses.jsp" class="nav-item active">
+            <a href="${pageContext.request.contextPath}/pages/admin/courses.jsp" class="nav-item active">
                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
                 Manage Courses
             </a>
-            <a href="/CourseManagementSystem/pages/admin/enrollments.jsp" class="nav-item">
+            <a href="${pageContext.request.contextPath}/pages/admin/enrollments.jsp" class="nav-item">
                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
                 Enrolments
             </a>
@@ -143,7 +143,7 @@
                     <strong><%= currentUser.getUsername() %></strong>
                     <span>Administrator</span>
                 </div>
-                <form action="/CourseManagementSystem/auth" method="post" style="margin-left:auto;">
+                <form action="${pageContext.request.contextPath}/auth" method="post" style="margin-left:auto;">
                     <input type="hidden" name="action" value="logout">
                     <button type="submit" class="logout-btn" title="Sign out">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -199,7 +199,7 @@
                     </div>
                     <div class="card-footer">
                         <button class="action-btn" onclick="openEditCourse('<%= c.getCourseId() %>','<%= c.getCourseCode() %>','<%= c.getCourseName().replace("'","\\'") %>','<%= c.getCredits() %>','<%= c.getMaxStudents() %>','<%= c.getSchedule() != null ? c.getSchedule() : "" %>','<%= c.getRoomAssignment() != null ? c.getRoomAssignment() : "" %>')">Edit</button>
-                        <form action="/CourseManagementSystem/auth" method="post" style="display:inline;" onsubmit="return confirm('Delete this course?')">
+                        <form action="${pageContext.request.contextPath}/auth" method="post" style="display:inline;" onsubmit="return confirm('Delete this course?')">
                             <input type="hidden" name="action" value="deleteCourse">
                             <input type="hidden" name="courseId" value="<%= c.getCourseId() %>">
                             <button type="submit" class="action-btn danger">Delete</button>
@@ -216,7 +216,7 @@
 <div class="modal-backdrop" id="addModal">
     <div class="modal">
         <h2>Add New Course</h2>
-        <form action="/CourseManagementSystem/auth" method="post">
+        <form action="${pageContext.request.contextPath}/auth" method="post">
             <input type="hidden" name="action" value="addCourse">
             <div class="two-col">
                 <div class="field"><label>Course Code</label><input type="text" name="courseCode" placeholder="e.g. CS201" required></div>
@@ -252,7 +252,7 @@
 <div class="modal-backdrop" id="editCourseModal">
     <div class="modal">
         <h2>Edit Course</h2>
-        <form action="/CourseManagementSystem/auth" method="post">
+        <form action="${pageContext.request.contextPath}/auth" method="post">
             <input type="hidden" name="action" value="updateCourse">
             <input type="hidden" name="courseId" id="editCourseId">
             <div class="two-col">

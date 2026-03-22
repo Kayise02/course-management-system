@@ -3,7 +3,7 @@
 <%
     User currentUser = (User) session.getAttribute("user");
     if (currentUser == null || !"student".equals(currentUser.getRole())) {
-        response.sendRedirect("/CourseManagementSystem/pages/login.jsp");
+        response.sendRedirect("${pageContext.request.contextPath}/pages/login.jsp");
         return;
     }
     CourseDAO courseDAO = new CourseDAO();
@@ -446,7 +446,7 @@
 
         <div class="sidebar-section">
             <div class="sidebar-section-label">My Studies</div>
-            <a href="/CourseManagementSystem/pages/student/dashboard.jsp" class="nav-item active">
+            <a href="${pageContext.request.contextPath}/pages/student/dashboard.jsp" class="nav-item active">
                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
                 My Dashboard
             </a>
@@ -469,7 +469,7 @@
                     <strong><%= currentUser.getFirstName() %> <%= currentUser.getLastName() %></strong>
                     <span>Student</span>
                 </div>
-                <form action="/CourseManagementSystem/auth" method="post" style="margin-left:auto;">
+                <form action="${pageContext.request.contextPath}/auth" method="post" style="margin-left:auto;">
                     <input type="hidden" name="action" value="logout">
                     <button type="submit" class="logout-btn" title="Sign out">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -596,7 +596,7 @@
                             <% if (alreadyEnrolled) { %>
                             <button class="enrol-btn enrolled-already" disabled>Already Enrolled</button>
                             <% } else { %>
-                            <form action="/CourseManagementSystem/auth" method="post" style="margin:0">
+                            <form action="${pageContext.request.contextPath}/auth" method="post" style="margin:0">
                                 <input type="hidden" name="action" value="enroll">
                                 <input type="hidden" name="courseId" value="<%= c.getCourseId() %>">
                                 <button type="submit" class="enrol-btn">Enrol in Course</button>

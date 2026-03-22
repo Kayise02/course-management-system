@@ -111,7 +111,7 @@
             <div class="error-msg"><%= error %></div>
             <% } %>
 
-            <form action="/CourseManagementSystem/auth" method="post">
+            <form action="${pageContext.request.contextPath}/auth" method="post">
                 <input type="hidden" name="action" value="register">
 
                 <div class="two-col">
@@ -152,7 +152,7 @@
             </form>
 
             <div class="separator">already have an account?</div>
-            <a href="/CourseManagementSystem/pages/login.jsp" class="btn-secondary">Sign In</a>
+            <a href="${pageContext.request.contextPath}/pages/login.jsp" class="btn-secondary">Sign In</a>
         </div>
     </div>
 
